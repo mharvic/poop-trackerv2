@@ -21,37 +21,23 @@ app.use(hsts({
 
 // --- React & API Routes --- //
 
-// const distPath = path.join(__dirname, "..", "client", "dist");
+const distPath = path.join(__dirname, "..", "client", "dist");
 
-// app.use(express.static(distPath));
+app.use(express.static(distPath));
 
-// app.use(express.json());
+app.use(express.json());
 
-// app.get("/api/hello", (req, res) => {
-//     res.json({ message: "Hello from the server!", timestamp: new Date().toISOString() });
-// });
-
-// app.get("/*splat", (req, res) => {
-//     res.sendFile(path.join(distPath, "index.html"));
-// });
-
-// app.use((err, req, res, next) => {
-//     console.error(err.stack);
-//     res.status(500).json({ error: "Internal Server Error" });
-// });
-
-app.get('/', (req, res) => {
-    res.send('Hello from HTTP!');
+app.get("/api/hello", (req, res) => {
+    res.json({ message: "Hello from the server!", timestamp: new Date().toISOString() });
 });
 
-// Sample route for HTTPS
-app.get('/secure', (req, res) => {
-    res.send('Hello from HTTPS!');
+app.get("/*splat", (req, res) => {
+    res.sendFile(path.join(distPath, "index.html"));
 });
 
-//test route
-app.get('/api/hello', (req, res) => {
-    res.json({ message: "Hello from the secure Express backend!" });
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: "Internal Server Error" });
 });
 
 // --- Server Startup --- //
