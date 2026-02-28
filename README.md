@@ -3,7 +3,7 @@
 Poop Tracker is a web-based app for health and wellbeing that enables users to monitor and assess their digestive health. By documenting daily bowel movements including essential factors (by using the Bristol Stool Scale), frequency, and related symptoms. Users can get meaningful insights about their gastrointestinal health.
 
 ## Installation
-1. Clone the repository in github [Poop Tracker](https://github.com/mharvic/poop-tracker).
+1. Clone the repository in github [Poop Tracker](https://github.com/mharvic/poop-trackerv2).
 2. Go to the project directory within the terminal to install the dependencies:
 
 ```bash
