@@ -4,11 +4,10 @@
   "description": "Poop Tracker is a web-based app for health and wellbeing that enables users to monitor and assess their digestive health. By documenting daily bowel movements including essential factors (by using the Bristol Stool Scale), frequency, and related symptoms. Users can get meaningful insights about their gastrointestinal health.",
   "main": "index.js",
   "scripts": {
-  "build": "npm --prefix client run build",
-  "dev": "npm --prefix server run dev",
-  "start": "npm --prefix server run start"
+    "build": "npm --prefix client run build",
+    "dev": "npm --prefix server run dev",
+    "start": "npm --prefix server run start"
   },
-  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mharvic/poop-trackerv2.git"
@@ -19,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/mharvic/poop-trackerv2/issues"
   },
-  "homepage": "https://github.com/mharvic/poop-trackerv2#readme"
+  "homepage": "https://github.com/mharvic/poop-trackerv2#readme",
+  "dependencies": {
+    "express": "^5.2.1",
+    "helmet": "^8.1.0"
+  }
 }
