@@ -5,6 +5,7 @@ import "./index.css";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import "./App.css"
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>

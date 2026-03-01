@@ -1,8 +1,14 @@
-export default function Home() {
+import reactLogo from "../assets/react.svg"
+import "../App.css"
+
+function Home() {
   return (
-    <main>
+    <div className="home-container">
       <h1>Home</h1>
       <p>Welcome to the home page.</p>
-    </main>
-  );
+      <img src={reactLogo} alt="React Logo" className="react-logo" />
+    </div>
+  )
 }
+
+export default Home

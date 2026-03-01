@@ -141,3 +141,14 @@ vite.config.ts.timestamp-*
 
 # Cert
 *.pem
+
+# Node modules
+node_modules
+client/node_modules
+server/node_modules
+
+# Build output
+client/dist
+
+# Environment
+.env

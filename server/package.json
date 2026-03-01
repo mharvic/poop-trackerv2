@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^5.2.1",
+    "helmet": "^8.1.0",
     "hsts": "^2.2.0"
   }
 }
