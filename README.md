@@ -83,3 +83,15 @@ https://localhost:3443
 
 If using HTTPS, you may need to accept the browser warning because the certificate is self-signed.
 
+
+## Reflection 
+
+We learned how caching improves performance but must be applied carefully. Static assets benefit from long-term caching because they rarely change, while dynamic and sensitive routes require stricter policies.
+
+The main trade-off we considered was balancing speed and security. While longer cache durations reduce server requests and improve load time, they can risk serving outdated data. For sensitive routes like user profile data, we prioritized privacy and disabled caching completely using no-store. Overall, our caching strategy improves application performance without compromising user security.
+
+The hardest part of this project was understanding how the production build works with Express. When the project was cloned, the website did not load properly because the `dist` folder was missing. At first, this was confusing, but we learned that the `dist` folder is not pushed to GitHub because it is in `.gitignore`. We realized we needed to run `npm run build` inside the client folder to generate it before starting the server.
+
+Implementing caching correctly was also challenging. We had to decide which routes could be cached and which ones should not be cached. For example, posts could be cached for a short time, but sensitive user profile data needed `no-store` so it would not be saved in the browser. Testing the Cache-Control headers in Chrome DevTools helped us confirm everything was working correctly.
+
+Overall, this project helped us better understand how the frontend build, backend server, HTTPS, and caching all work together in a real application.
