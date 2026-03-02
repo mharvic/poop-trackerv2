@@ -71,7 +71,7 @@ After installing dependencies and SSL certificate files, generate the production
 
 ```bash
 cd server
-node index.js
+node server.js
 ```
 
 Once the server is running, open your browser and visit:
