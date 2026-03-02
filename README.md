@@ -7,11 +7,11 @@ Poop Tracker is a web-based app for health and wellbeing that enables users to m
 2. Go to the project directory within the terminal to install the dependencies:
 
 ```bash
-I. cd client
-II. npm install
-III. npm run build
-IV. cd ../server
-V. npm install
+cd client
+npm install
+npm run build
+cd ../server
+npm install
 ```
 The Express server serves static files from the client/dist folder. If the dist folder is not generated, the application will return an internal server error because the compiled frontend files will not exist.
 
@@ -25,12 +25,12 @@ For this project, we choose to utilize OpenSSL for generating a self-signed cert
 
 ```bash
 
-VIII. Cd server
-IX. Mkdir certs
-X. cd certs
-XI. choco install openssl -y (Windows) || brew install openssl (Apple/Mac)
-XII. openssl genrsa -out private-key.pem 2048
-XIII. openssl req -new -x509 -key private-key.pem -out certificate.pem -days 365
+Cd server
+Mkdir certs
+cd certs
+choco install openssl -y (Windows) || brew install openssl (Apple/Mac)
+openssl genrsa -out private-key.pem 2048
+openssl req -new -x509 -key private-key.pem -out certificate.pem -days 365
 ```
 
 ## Setting up HTTP headers
@@ -86,7 +86,9 @@ If using HTTPS, you may need to accept the browser warning because the certifica
 
 ## Reflection 
 
-We learned how caching improves performance but must be applied carefully. Static assets benefit from long-term caching because they rarely change, while dynamic and sensitive routes require stricter policies.
+We learned that every user needs to install their certificates once they run the project. Because we've used .gitignore to hide it and will not be push to github.
+
+We also, learned how caching improves performance but must be applied carefully. Static assets benefit from long-term caching because they rarely change, while dynamic and sensitive routes require stricter policies.
 
 The main trade-off we considered was balancing speed and security. While longer cache durations reduce server requests and improve load time, they can risk serving outdated data. For sensitive routes like user profile data, we prioritized privacy and disabled caching completely using no-store. Overall, our caching strategy improves application performance without compromising user security.
 
