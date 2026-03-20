@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npm --prefix client run build",
-    "dev": "npm --prefix server run dev",
+    "dev": "node --env-file=.env app.js",
     "start": "npm --prefix server run start"
   },
   "repository": {
@@ -20,7 +20,11 @@
   },
   "homepage": "https://github.com/mharvic/poop-trackerv2#readme",
   "dependencies": {
+    "argon2": "^0.44.0",
+    "body-parser": "^2.2.2",
     "express": "^5.2.1",
-    "helmet": "^8.1.0"
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.3.1"
   }
 }
