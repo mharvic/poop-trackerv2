@@ -10,6 +10,7 @@ const helmet = require("helmet");
 const app = express();
 
 // Ports
+const jwt = require("jsonwebtoken");
 const PORT_HTTP = 3000;
 const PORT_HTTPS = 3443;
 

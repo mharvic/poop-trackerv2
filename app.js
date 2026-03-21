@@ -6,14 +6,22 @@ const bodyParser = require("body-parser");
 const pageRoutes = require("./routes/pages");
 const adminRoutes = require("./routes/admin");
 const authRoutes = require("./routes/auth");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
-// serve static files
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5
+});
 
+// apply to login route
+app.use("/api/auth/login", limiter);
+
+// serve static files
 app.use(express.static(path.join(__dirname, "public")));
 
 // set up the router
