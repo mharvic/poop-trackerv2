@@ -8,4 +8,8 @@ router.get("/protected", authMiddleware, authorize("admin"), (req, res) => {
   res.status(200).json({ message: "Welcome admin user" });
 });
 
+router.get("/admin", authMiddleware, authorize("admin"), (req, res) => {
+  res.send("Admin Only Page");
+});
+
 module.exports = router;

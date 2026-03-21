@@ -3,9 +3,9 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const pageRoutes = require("./routes/pages");
-const adminRoutes = require("./routes/admin");
-const authRoutes = require("./routes/auth");
+const pageRoutes = require("./server/routes/pages");
+const adminRoutes = require("./server/routes/admin");
+const authRoutes = require("./server/routes/auth");
 const rateLimit = require("express-rate-limit");
 
 const app = express();
