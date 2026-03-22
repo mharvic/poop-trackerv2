@@ -1,10 +1,19 @@
+const urlParams = new URLSearchParams(window.location.search);
+const urlToken = urlParams.get("token");
+
+if (urlToken) {
+
+  localStorage.setItem("token", urlToken);
+  
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
 const token = localStorage.getItem("token");
 
 if (!token) {
   window.location.href = "/login";
 } else {
   try {
-   
     const payload = JSON.parse(atob(token.split('.')[1]));
     const currentPath = window.location.pathname;
 
@@ -14,12 +23,10 @@ if (!token) {
     }
 
     if (currentPath === "/dashboard" && payload.role === "admin") {
-    
       window.location.href = "/admin-dashboard"; 
     }
 
   } catch (error) {
-   
     localStorage.removeItem("token");
     window.location.href = "/login";
   }

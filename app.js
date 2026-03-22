@@ -7,11 +7,13 @@ const pageRoutes = require("./server/routes/pages");
 const adminRoutes = require("./server/routes/admin");
 const authRoutes = require("./server/routes/auth");
 const rateLimit = require("express-rate-limit");
+const passport = require('passport');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
+app.use(passport.initialize());
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
