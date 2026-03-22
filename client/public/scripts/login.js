@@ -1,36 +1,41 @@
-window.onload = function () {
-  const form = document.getElementById("loginForm");
+const form = document.getElementById("loginForm");
 
-  form.onsubmit = async function (e) {
-    e.preventDefault();
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
 
-    try {
-      const res = await fetch("/api/auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        credentials: "include",
-        body: JSON.stringify({ username, password })
-      });
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      credentials: "include",
+      body: JSON.stringify({ username, password })
+    });
 
-      const data = await res.json();
+    const data = await res.json();
+    console.log("SERVER RESPONSE:", data);
 
-      console.log("RESPONSE:", data);
-
-      if (res.ok) {
-        alert("Login successful!");
-        window.location.href = "/dashboard";
+    if (res.ok) {
+    
+      localStorage.setItem("token", data.token);
+      
+      alert("Login successful!");
+      
+      if (data.role === "admin") {
+          window.location.href = "/admin-dashboard";
       } else {
-        alert(data.message);
+          window.location.href = "/dashboard";
       }
-
-    } catch (err) {
-      console.error(err);
-      alert("Login failed");
+    } else {
+      alert(data.message || "Login failed.");
     }
-  };
-};
+
+  } catch (err) {
+    console.error("Fetch error:", err);
+    alert("Could not connect to the server.");
+  }
+});
