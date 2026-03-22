@@ -24,7 +24,7 @@ const limiter = rateLimit({
 app.use("/api/auth/login", limiter);
 
 // serve static files
-app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "client/public")));
 
 // set up the router
 app.use("/api/admin", adminRoutes);
