@@ -8,6 +8,10 @@ const https = require("https");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
 require("dotenv").config();
+const csrf = require("csurf");
+const rateLimit = require("express-rate-limit"); 
+const jwt = require("jsonwebtoken");
+
 
 const mongoose = require("mongoose");
 
@@ -22,6 +26,26 @@ app.use(
     hsts: false 
   })
 );
+
+const isProduction = process.env.NODE_ENV === "production";
+
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: "Too many login attempts. Try again later."
+});
+app.use("/api/auth/login", loginLimiter);
+
+const csrfProtection = csrf({ cookie: true });
+
+app.use("/api/auth/login", (req, res, next) => next());
+app.use((req, res, next) => {
+  if (req.path === "/api/auth/login") return next();
+  csrfProtection(req, res, next);
+});
+app.get("/api/csrf-token", (req, res) => {
+  res.json({ csrfToken: req.csrfToken() });
+});
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log(" MongoDB connected"))
