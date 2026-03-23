@@ -97,3 +97,91 @@ The hardest part of this project was understanding how the production build work
 Implementing caching correctly was also challenging. We had to decide which routes could be cached and which ones should not be cached. For example, posts could be cached for a short time, but sensitive user profile data needed `no-store` so it would not be saved in the browser. Testing the Cache-Control headers in Chrome DevTools helped us confirm everything was working correctly.
 
 Overall, this project helped us better understand how the frontend build, backend server, HTTPS, and caching all work together in a real application.
+
+#Phase 2 Implementing Authentication and Authorization Mechanisms
+
+## Setting up the respository 
+
+As the project entered phase 2, we implemented more security and to run the server there are some dependencies needed to be installed. 
+
+1. Clone the repository in github [Poop Tracker](https://github.com/mharvic/poop-trackerv2).
+2. Go to the project directory within the terminal to install the dependencies:
+
+```bash
+
+cd client
+npm install argon2 jsonwebtoken passport passport-google-oauth20 express-rate-limit
+
+```
+
+3. Create .env file
+5. Once the .env file is completed, open the terminal enter:
+
+```bash
+
+npm start
+
+```
+
+6. You should see:
+
+```bash
+
+HTTP running at http://localhost:3000
+MongoDB connected
+
+```
+
+For troubleshooting: 
+
+If npm not found -> Install Node.js on https://nodejs.org/
+
+If "Cannot find module" -> 
+
+```bash
+
+npm install
+
+```
+If server will not start -> 
+  a) Make sure .env file exists
+  b) Check MongoDB connection string
+  c) Ensure port 3000 is not in use
+
+## Authentication Mechanisms
+
+We chose a hybrid approach for our authentication system, which incorporated Google Single Sign-On (SSO) and local authentication using Argon2 encrypting and a dual JWT token architecture. To achieve a perfect balance between a seamless user experience and robust backend security. Having spent years creating websites, we witness firsthand the ease with which users become frustrated by complicated password prerequisites or resetting passwords, which typically results in a loss of interest. By offering Google SSO, this barrier is eliminated, allowing immediate access. Nevertheless, to guarantee that the application remains accessible to users who prefer not to link third-party accounts, a secure local logon option is provided. The dual-method approach effectively achieves the expectation that modern web applications should be instantly accessible on the frontend and vault-like behind the scenes. 
+
+## Role-Based Access Control
+
+By specifically adding a user role into the JWT payload, we established strict Role-Based Access Control (RBAC) for our access control system. This enables us to generate two separate, clean landing pages (/dashboard and /admin-dashboard) that are secured through frontend redirect logic.
+
+To enforce these roles securely on the backend, middleware was implemented to validate user authorization before granting access to protected routes. For example, an authorize middleware function was used to check whether the authenticated user’s role matched the required role for a route. If the role matched, the request proceeded; otherwise, a 403 “Access Denied” response was returned. This middleware works alongside JWT verification, where the decoded token attaches the user’s role to req.user. As a result, routes such as /admin-dashboard were protected so that only users with the Admin role could access them.
+
+```bash
+
+const isMatch = await argon2.verify(user.password, password);
+    if (!isMatch)
+      return res.status(400).json({ message: "Invalid Credentials" });
+
+```
+
+The incorporation of this system with Google SSO was the primary challenge. Initially, our script confused fresh URL tokens by interpreting obsolete local tokens, which led to infinite routing cycles. We resolved this issue by changing the logic to prioritize the collection and handling of URL parameters.
+
+In the end, although the Google consent screen introduced a minor inconvenience, it proved to be a worthwhile trade-off. It maintained strict access control while providing users with a highly secure and seamless login experience for future visits, effectively balancing security and usability.
+
+User roles: 
+christine_suk -> Admin 
+jhermin_bugrain -> Admin
+mharvicinocentes2_db_user -> Admin
+
+
+
+
+
+
+
+
+
+
+
