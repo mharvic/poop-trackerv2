@@ -98,7 +98,7 @@ Implementing caching correctly was also challenging. We had to decide which rout
 
 Overall, this project helped us better understand how the frontend build, backend server, HTTPS, and caching all work together in a real application.
 
-#Phase 2 Implementing Authentication and Authorization Mechanisms
+# Phase 2 Implementing Authentication and Authorization Mechanisms
 
 ## Setting up the respository 
 
