@@ -171,9 +171,14 @@ The incorporation of this system with Google SSO was the primary challenge. Init
 In the end, although the Google consent screen introduced a minor inconvenience, it proved to be a worthwhile trade-off. It maintained strict access control while providing users with a highly secure and seamless login experience for future visits, effectively balancing security and usability.
 
 User roles: 
-christine_suk -> Admin 
-jhermin_bugrain -> Admin
-mharvicinocentes2_db_user -> Admin
+Admin-
+username: leon
+password: leon123
+
+Regular user- 
+username: max1 
+password: max321
+
 
 
 
