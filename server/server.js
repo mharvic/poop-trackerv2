@@ -17,6 +17,9 @@ const mongoose = require("mongoose");
 
 const app = express();
 
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
+
 // middleware
 app.use(cookieParser());
 app.use(express.json());
