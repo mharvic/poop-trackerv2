@@ -6,9 +6,32 @@
   <title>User Dashboard</title>
   <script src="/scripts/auth-check.js"></script>
   <script src="/scripts/logout.js" defer></script>
+  <script src="/scripts/dashboard.js" defer></script>
 </head>
 <body>
-  <h1>Welcome to your Dashboard!</h1>
+  <h1>Welcome, <span id="welcomeName">User</span>!</h1>
+  
+  <hr>
+
+  <h2>Update Profile</h2>
+
+  <form id="profileForm">
+    <label for="updateName">Name:</label>
+    <input type="text" id="updateName" name="updateName" required />
+    <br><br>
+    
+    <label for="updateEmail">Email:</label>
+    <input type="email" id="updateEmail" name="updateEmail" required />
+    <br><br>
+
+    <label for="updateBio">Bio (Max 500 characters):</label><br>
+    <textarea id="updateBio" name="updateBio" rows="4" cols="30" maxlength="500"></textarea>
+    <br><br>
+
+    <button type="submit">Save Profile</button>
+  </form>
+
   <button id="logoutBtn" style="margin-top: 20px; background-color: red; color: white;">Logout</button>
+
 </body>
 </html>
