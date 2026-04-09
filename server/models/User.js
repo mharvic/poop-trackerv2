@@ -20,6 +20,12 @@ const UserSchema = new mongoose.Schema({
     enum: ["user", "admin"],
     default: "user",
   },
+  email: {
+    type: String
+   }, 
+  bio: {
+    type: String 
+  }
 });
 
 module.exports = mongoose.model("User", UserSchema);
