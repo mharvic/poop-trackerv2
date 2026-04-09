@@ -7,6 +7,9 @@ const argon2 = require("argon2");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 
+const { body, validationResult } = require("express-validator");
+const { encryptData, decryptData } = require("../utilities/encryption");
+
 const User = require("../models/User");
 
 passport.use(new GoogleStrategy({
@@ -93,6 +96,91 @@ router.post("/login", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+//pulling the user data on the database
+
+router.get("/me", async (req, res) => {
+  try {
+  
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Access Denied: No token provided" });
+    }
+
+    const token = authHeader.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(decoded.id).select("-password");
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({
+      username: user.username,
+      email: user.email ? decryptData(user.email) : "", // send empty string or blank if they don't have an email.
+      bio: user.bio ? decryptData(user.bio) : "",
+      role: user.role
+    });
+
+  } catch (error) {
+    console.error("Token Error:", error.message);
+    res.status(401).json({ message: "Invalid or expired token" });
+  }
+});
+
+router.post("/update", [
+
+  body("username")
+    .isLength({ min: 3, max: 50 }).withMessage("Name must be between 3 and 50 characters.")
+    .escape(),
+  
+  body("email")
+    .isEmail().withMessage("Please enter a valid email address.")
+    .normalizeEmail(),
+  
+  body("bio")
+    .optional({ checkFalsy: true })
+    .isLength({ max: 500 }).withMessage("Bio cannot exceed 500 characters.")
+    .escape()
+], async (req, res) => {
+  try {
+   
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() }); 
+    }
+
+    
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Access Denied: No token provided" });
+    }
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    
+    const { username, email, bio } = req.body;
+
+    
+    const safeEmail = encryptData(email);
+    const safeBio = encryptData(bio);
+
+    const updatedUser = await User.findByIdAndUpdate(decoded.id, {
+      username: username,
+      email: safeEmail,
+      bio: safeBio
+    }, { new: true });
+
+    res.json({ message: "Profile securely updated!" });
+
+  } catch (error) {
+    console.error("Update Error:", error);
+    res.status(500).json({ message: "Server error during update" });
   }
 });
 
