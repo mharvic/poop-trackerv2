@@ -4,15 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Dashboard</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/styles.css">
+
   <script src="/scripts/auth-check.js"></script>
   <script src="/scripts/logout.js" defer></script>
-  
 </head>
 <body>
-  <main>
-    <h1 style="color: blue;">Welcome to the VIP Admin Dashboard!</h1>
-    <p>Only users with the "admin" role should see this page.</p>
-    <button id="logoutBtn" style="margin-top: 20px; background-color: red; color: white;">Logout</button>
-  </main>
+
+  <div class="container">
+
+    <h1>Admin Dashboard</h1>
+    <p class="subtitle">VIP access only</p>
+
+    <div class="profile">
+      <h3>System Access</h3>
+      <p>You are logged in as an administrator.</p>
+      <p>Only users with the correct role can view this page.</p>
+    </div>
+
+    <button id="logoutBtn">Logout</button>
+
+  </div>
+
 </body>
 </html>
