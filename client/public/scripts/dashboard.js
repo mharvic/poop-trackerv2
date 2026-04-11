@@ -1,40 +1,43 @@
+// Load user data
 window.onload = async function () {
   const token = localStorage.getItem("token");
 
   try {
-    const response = await fetch("/api/auth/me", {
-      method: "GET",
+    const res = await fetch("/api/auth/me", {
       headers: {
-        "Authorization": `Bearer ${token}` 
+        Authorization: `Bearer ${token}`
       }
     });
 
-    const userData = await response.json();
+    const user = await res.json();
 
-    if (response.ok) {
-      document.getElementById("welcomeName").textContent = userData.username;
-      document.getElementById("updateName").value = userData.username;
-      
-      if (userData.email) {
-          document.getElementById("updateEmail").value = userData.email;
-      }
-      
-      if (userData.bio) {
-          document.getElementById("updateBio").value = userData.bio;
-      }
+    if (res.ok) {
+
+      // ✅ XSS SAFE (important)
+      document.getElementById("welcomeName").textContent = user.username;
+
+      document.getElementById("displayName").textContent = user.username;
+      document.getElementById("displayEmail").textContent = user.email || "";
+      document.getElementById("displayBio").textContent = user.bio || "";
+
+      // Fill form
+      document.getElementById("updateName").value = user.username;
+      document.getElementById("updateEmail").value = user.email || "";
+      document.getElementById("updateBio").value = user.bio || "";
+
     } else {
-      console.error("Failed to load user data");
+      alert("Not authorized");
     }
-  } catch (error) {
-    console.error("Error fetching profile:", error);
+
+  } catch (err) {
+    console.error("Error:", err);
   }
 };
 
 
-const profileForm = document.getElementById("profileForm");
-
-profileForm.addEventListener("submit", async (e) => {
-  e.preventDefault(); // Stop the page from reloading
+// Handle update
+document.getElementById("profileForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
 
   const token = localStorage.getItem("token");
 
@@ -45,12 +48,11 @@ profileForm.addEventListener("submit", async (e) => {
   };
 
   try {
-
     const res = await fetch("/api/auth/update", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`
+        Authorization: `Bearer ${token}`
       },
       body: JSON.stringify(updatedData)
     });
@@ -58,15 +60,21 @@ profileForm.addEventListener("submit", async (e) => {
     const data = await res.json();
 
     if (res.ok) {
-      alert("Profile securely updated!");
-     
+      alert("Profile updated!");
+
+      // Update display instantly
+      document.getElementById("displayName").textContent = updatedData.username;
+      document.getElementById("displayEmail").textContent = updatedData.email;
+      document.getElementById("displayBio").textContent = updatedData.bio;
+
       document.getElementById("welcomeName").textContent = updatedData.username;
+
     } else {
-      
-      alert("Error: " + (data.message || (data.errors && data.errors[0].msg) || "Update failed"));
+      alert(data.message || "Update failed");
     }
-  } catch (error) {
-    console.error("Update failed:", error);
-    alert("Could not connect to the server.");
+
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
   }
 });
