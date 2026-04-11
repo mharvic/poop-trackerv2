@@ -180,6 +180,72 @@ username: max1
 password: max321
 
 
+## User Dashboard
+
+We created a secure dashboard where users can:
+
+- View profile (username, email, bio)  
+- Update profile information  
+
+Data is fetched from /api/auth/me using JWT authentication.
+
+
+## Profile Update Feature
+
+Users can update:
+
+- Username  
+- Email  
+- Bio  
+
+The data is sent to /api/auth/update where validation, sanitization, and encryption are applied before saving.
+
+
+## Input Validation and Sanitization
+
+We used express-validator:
+
+- Username: 3–50 characters  
+- Email: valid format  
+- Bio: max 500 characters  
+
+Sanitization used:
+
+.trim().escape()
+
+Example input:
+
+<script>alert("hack")</script>
+
+Becomes:
+
+&lt;script&gt;alert("hack")&lt;/script&gt;
+
+
+## XSS Protection
+
+We implemented two layers of protection:
+
+Backend:
+- Sanitization using .escape()
+
+Frontend:
+- Safe rendering using textContent instead of innerHTML
+
+
+
+## XSS Testing
+
+We tested using:
+
+<script>alert("hack")</script>
+
+Result:
+- No popup appeared  
+- Script displayed as text  
+- Application remained secure  
+
+
 
 
 
