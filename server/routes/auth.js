@@ -136,17 +136,21 @@ router.get("/me", async (req, res) => {
 router.post("/update", [
 
   body("username")
+    .trim() 
     .isLength({ min: 3, max: 50 }).withMessage("Name must be between 3 and 50 characters.")
     .escape(),
-  
+
   body("email")
+    .trim()
     .isEmail().withMessage("Please enter a valid email address.")
     .normalizeEmail(),
-  
+
   body("bio")
     .optional({ checkFalsy: true })
+    .trim()
     .isLength({ max: 500 }).withMessage("Bio cannot exceed 500 characters.")
     .escape()
+
 ], async (req, res) => {
   try {
    
