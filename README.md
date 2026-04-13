@@ -325,4 +325,8 @@ The most challenging vulnerabilities to address were related to XSS and dependen
 
 Overall, this phase helped us understand how different security practices work together to protect a web application.
 
+## Final Thoughts & Troubleshooting
+
+We want to transparently address that this project is being submitted past the Sunday deadline. We had the project completed on time, but during our final QA testing, a critical issue occurs that broke the application's functionality. While trying to clear two low-severity vulnerabilities, we ran the npm audit fix --force command. Unfortunately, this forceful update introduced breaking changes to our dependency tree, which completely broke our authentication and login flow. Rather than submitting broken code, we made the call to spend the extra time debugging and tracing the root cause of the dependency conflict. This last-minute app crash was stressful, but it reinforced how crucial thorough, end-to-end testing is before deploying any application, and taught us a valuable lesson about the risks of forcefully upgrading packages.
+
 
