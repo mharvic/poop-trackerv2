@@ -1,7 +1,13 @@
-// Get token
-const token = localStorage.getItem("token");
+document.addEventListener("DOMContentLoaded", async () => {
 
-async function loadAdmin() {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    alert("No token found");
+    window.location.href = "/index.html";
+    return;
+  }
+
   try {
     const res = await fetch("/api/auth/me", {
       headers: {
@@ -16,9 +22,8 @@ async function loadAdmin() {
       return;
     }
 
-    // Admin check
     if (user.role !== "admin") {
-      alert("Access denied");
+      alert("Access denied. Admins only.");
       window.location.href = "/dashboard.html";
       return;
     }
@@ -32,48 +37,50 @@ async function loadAdmin() {
     document.getElementById("updateEmail").value = user.email || "";
 
   } catch (err) {
-    console.error("Error:", err);
+    console.error("Error loading admin details:", err);
   }
-}
 
-loadAdmin();
+  const profileForm = document.getElementById("profileForm");
 
+  // Update the profile without refreshing the page
 
-// Handle update
-document.getElementById("profileForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+  if (profileForm) {
+    profileForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-  const updatedData = {
-    username: document.getElementById("updateName").value,
-    email: document.getElementById("updateEmail").value
-  };
+      const currentToken = localStorage.getItem("token");
 
-  try {
-    const res = await fetch("/api/auth/update", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`
-      },
-      body: JSON.stringify(updatedData)
+      const updatedData = {
+        username: document.getElementById("updateName").value,
+        email: document.getElementById("updateEmail").value,
+        bio: "" 
+      };
+
+      try {
+        const res = await fetch("/api/auth/update", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${currentToken}`
+          },
+          body: JSON.stringify(updatedData)
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Admin Profile updated!");
+
+          document.getElementById("displayName").textContent = updatedData.username;
+          document.getElementById("displayEmail").textContent = updatedData.email;
+          document.getElementById("welcomeName").textContent = updatedData.username;
+        } else {
+          alert(data.message || "Update failed");
+        }
+      } catch (err) {
+        console.error("Update Error:", err);
+        alert("Server error. Check the console.");
+      }
     });
-
-    const data = await res.json();
-
-    if (!res.ok) {
-      alert(data.message || "Update failed");
-      return;
-    }
-
-    alert("Profile updated!");
-
-    // Update UI instantly
-    document.getElementById("displayName").textContent = updatedData.username;
-    document.getElementById("displayEmail").textContent = updatedData.email;
-    document.getElementById("welcomeName").textContent = updatedData.username;
-
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
   }
 });
