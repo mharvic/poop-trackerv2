@@ -15,5 +15,5 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: run npm audit (fail only on high/critical)
+      - name: Run npm audit (fail only on high/critical)
         run: npm audit --audit-level=high

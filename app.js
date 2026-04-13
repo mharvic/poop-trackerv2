@@ -3,7 +3,6 @@ const path = require("path");
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require("cors"); 
 const pageRoutes = require("./server/routes/pages");
 const adminRoutes = require("./server/routes/admin");
 const authRoutes = require("./server/routes/auth");
@@ -12,12 +11,6 @@ const passport = require('passport');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-/* ✅ ADD THIS BLOCK */
-app.use(cors({
-  origin: "http://localhost:5173",
-  credentials: true
-}));
 
 app.use(bodyParser.json());
 app.use(passport.initialize());
@@ -33,7 +26,7 @@ app.use("/api/auth/login", limiter);
 // serve static files
 app.use(express.static(path.join(__dirname, "client/public")));
 
-// routes
+// set up the router
 app.use("/api/admin", adminRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/", pageRoutes);
