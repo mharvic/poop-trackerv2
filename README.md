@@ -180,6 +180,8 @@ username: max1
 password: max321
 
 
+## Phase 3: Implementing Security Best Practices for User Profile Dashboard
+
 ## User Dashboard
 
 We created a secure dashboard where users can:
@@ -245,14 +247,72 @@ Result:
 - Script displayed as text  
 - Application remained secure  
 
+## Dependency Management and Security Automation
 
+To ensure our application remains secure and up to date, we implemented dependency management using `npm audit` and automated security checks with GitHub Actions.
 
+### npm audit
 
+We used the following command to scan for vulnerabilities in third-party libraries:
 
+```bash
+npm audit
+```
 
+This allowed us to detect high and critical vulnerabilities in our dependencies. To resolve these issues, we ran `npm audit fix` and updated vulnerable packages to more secure versions. After applying the fixes, the vulnerabilities were resolved and the application became more secure.
 
+## GitHub Actions Workflow
 
+We created a GitHub Actions workflow called "Security Check" that runs automatically on every push and pull request. The workflow performs the following steps:
 
+- Checkout code
+Uses actions/checkout@v4 to access the repository files.
 
+- Install dependencies
+```bash
+npm install
+```
+to install all required project packages.
 
+Run security audit
+```bash
+npm audit --audit-level=high
+```
 
+This step checks for vulnerabilities and fails the workflow if any high or critical issues are found.
+
+Workflow Behavior
+
+Initially, the workflow failed because high-severity vulnerabilities were detected in the dependencies. This was indicated by a red in GitHub Actions.
+
+After running npm audit fix and updating the dependencies, the vulnerabilities were resolved. As a result, the workflow now passes successfully.
+
+This demonstrates how automated security checks can detect and help fix issues early in development.
+
+## Why Dependency Management Matters
+
+Using outdated third-party libraries is risky because they may contain known security vulnerabilities such as:
+
+Cross-Site Scripting (XSS)
+Injection attacks
+Data exposure risks
+
+Automation with GitHub Actions helps by:
+
+- Continuously scanning for vulnerabilities
+- Preventing insecure code from going unnoticed
+- Maintaining long-term application security
+
+## Reflection
+
+In this phase, we focused on improving the security of our application by working on the user dashboard, input validation, encoding, encryption, and dependency management.
+
+One of the main challenges was implementing proper input validation. It was not always clear how strict the rules should be, especially for fields like the bio. We solved this by setting clear limits (like max length and allowed characters) and using validation tools to make sure only safe input is accepted.
+
+Another important learning point was understanding how output encoding prevents XSS attacks. At first, we thought sanitizing input was enough, but we learned that encoding output is also necessary. By making sure user data is displayed safely, we prevented scripts from running in the browser.
+
+We also learned the importance of keeping dependencies updated. When we ran `npm audit`, we found vulnerabilities in our project. After fixing them, our GitHub Actions security check passed. This showed us how automated tools can help maintain security over time.
+
+The most challenging vulnerabilities to address were related to XSS and dependency issues. It required careful testing using malicious inputs such as `<script>alert("hack")</script>` to confirm that our protections were working correctly. Testing in the browser and using developer tools helped us verify that scripts were not executed and that the application handled the input safely.
+
+Overall, this phase helped us understand how different security practices work together to protect a web application.
