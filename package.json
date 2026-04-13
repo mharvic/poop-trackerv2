@@ -22,7 +22,7 @@
   "dependencies": {
     "argon2": "^0.44.0",
     "body-parser": "^2.2.2",
-    "csurf": "^1.11.0",
+    "csurf": "^1.2.2",
     "express": "^5.2.1",
     "express-rate-limit": "^8.3.2",
     "express-validator": "^7.3.2",
