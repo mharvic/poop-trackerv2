@@ -227,7 +227,7 @@ Becomes:
 
 &lt;script&gt;alert("hack")&lt;/script&gt;
 
-## Reflection
+## Reflection Checkpoint
 
 Improper input validation leaves an application highly vulnerable to exploits like Cross-Site Scripting (XSS) and SQL Injection. For example, without proper validation, an attacker can easily insert malicious scripts using characters like < and >. We can significantly lower this risk through strict input sanitization. Furthermore, output encoding prevents XSS by converting these dangerous characters into safe text formats before they are displayed on the screen, ensuring the browser doesn't mistake them for executable code. A major problem we encountered with our AES-256-CBC implementation was dealing with strict cryptographic parameters, specifically the secret key length. Node's crypto module requires the encryption key to be exactly 32 bytes (256 bits). Early on, simple misconfigurations in our .env file and just use random text with the mix of random letters, number and characters and caused fatal server crashes due to 'invalid key length' errors. We resolved this by generating a standardized 32-character secure key and ensuring our environment variables were strictly managed across our development environment.
 
@@ -324,3 +324,5 @@ We also learned the importance of keeping dependencies updated. When we ran `npm
 The most challenging vulnerabilities to address were related to XSS and dependency issues. It required careful testing using malicious inputs such as `<script>alert("hack")</script>` to confirm that our protections were working correctly. Testing in the browser and using developer tools helped us verify that scripts were not executed and that the application handled the input safely.
 
 Overall, this phase helped us understand how different security practices work together to protect a web application.
+
+
