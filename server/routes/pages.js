@@ -27,15 +27,4 @@ router.get("/admin-dashboard", (req, res) => {
   res.sendFile(path.join(basePath, "admin-dashboard.html"));
 });
 
-//test!!
-router.get("/dashboard", authMiddleware, async (req, res) => {
-  console.log("STEP 1: Dashboard route hit");
-
-  try {
-    res.send("Dashboard is working"); 
-  } catch (err) {
-    console.error(err);
-  }
-});
-
 module.exports = router;
