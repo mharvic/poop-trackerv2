@@ -337,3 +337,16 @@ The Data Flow Diagram (DFD) below visualizes the secure architecture of the appl
 
 
 <img width="670" height="606" alt="DFD" src="https://github.com/user-attachments/assets/e33be12c-2e47-4b7d-8823-485aaa0998a7" />
+
+### Using STRIDE
+
+The STRIDE framework provides a structured approach to identifying security vulnerabilities across the application. The table below breaks down specific threats alongside existing mitigations and the calculated risk level for each category.
+
+| Threat Area                         | Severity | Likelihood | Decision / Action Taken                                                                                                                                                                          |
+|-------------------------------------|----------|------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Authentication & JWT Handling       | HIGH     | HIGH       | Implemented hybrid login (Google SSO + Argon2 local auth). Established a secure dual-token system using a short-lived Access Token and a 7-day HttpOnly Refresh Token to neutralize token theft. |
+| Role-Based Access (Admin vs User)   | MEDIUM   | MEDIUM     | Embedded user roles directly into the secure JWT payload. Created separate, uncluttered dashboard routes protected by frontend script verification and backend middleware.                       |
+| Input Validation (User ➔ Server)    | HIGH     | HIGH       | Deployed express-validator to strictly sanitize incoming data. Enforced character limits, validated email formats, and escaped HTML tags to neutralize XSS and injection attacks.                |
+| Data Protection (Server ➔ Database) | HIGH     | LOW        | Utilized Node's native crypto module to implement AES-256-CBC encryption. Ensured highly sensitive data (emails and bios) remains safely encrypted at rest within the MongoDB database.          |
+| Information Disclosure              | HIGH     | MEDIUM     | Enforced output encoding by strictly utilizing textContent and .value in the frontend JavaScript to display data. Explicitly stripped password hashes from all API responses.                    |
+| Denial of Service (DoS)             | MEDIUM   | MEDIUM     | Integrated express-rate-limit on the authentication routes to throttle automated brute-force scripts and protect the Node.js server from being overwhelmed by spam requests.                     |
