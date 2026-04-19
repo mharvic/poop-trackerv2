@@ -334,3 +334,6 @@ We want to transparently address that this project is being submitted past the S
 
 ### Data Flow Diagram
 The Data Flow Diagram (DFD) below visualizes the secure architecture of the application and the movement of sensitive data across established trust boundaries. Through the start of the hybrid authentication technique (local login and Google SSO) up until the dual-token JWT system's issuance for session management, it shows the entire user interaction. The diagram additionally demonstrates the critical security barrier that guards the backend, showing how user data goes through strict input hygiene middleware before sensitive fields are encrypted with AES-256 and kept in the database at rest.
+
+
+<img width="670" height="606" alt="DFD" src="https://github.com/user-attachments/assets/e33be12c-2e47-4b7d-8823-485aaa0998a7" />
