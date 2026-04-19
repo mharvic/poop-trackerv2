@@ -350,3 +350,9 @@ The STRIDE framework provides a structured approach to identifying security vuln
 | Data Protection (Server ➔ Database) | HIGH     | LOW        | Utilized Node's native crypto module to implement AES-256-CBC encryption. Ensured highly sensitive data (emails and bios) remains safely encrypted at rest within the MongoDB database.          |
 | Information Disclosure              | HIGH     | MEDIUM     | Enforced output encoding by strictly utilizing textContent and .value in the frontend JavaScript to display data. Explicitly stripped password hashes from all API responses.                    |
 | Denial of Service (DoS)             | MEDIUM   | MEDIUM     | Integrated express-rate-limit on the authentication routes to throttle automated brute-force scripts and protect the Node.js server from being overwhelmed by spam requests.                     |
+
+The STRIDE framework provided an organized checklist that required us to examine the program from an opposing perspective rather than solely from a developer's standpoint. It allowed accurate detection of vulnerabilities throughout the data flows.
+
+The assessment of the impact and probability of threats indicated that information compromise was significantly more serious than We anticipated, due to the database including highly sensitive user emails and biographies. On the other hand, the threat of denial of service appeared less critical for this particular project due to the application's current scale, which reduces the likelihood of large automated attacks.
+
+The important severity and potential for authentication risks and data breaches significantly influenced our risk management strategies. This insight compelled us to prioritize the implementation of a secure dual token architecture and AES 256 encryption over only concentrating on fundamental frontend functions.
