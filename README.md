@@ -356,3 +356,20 @@ The STRIDE framework provided an organized checklist that required us to examine
 The assessment of the impact and probability of threats indicated that information compromise was significantly more serious than We anticipated, due to the database including highly sensitive user emails and biographies. On the other hand, the threat of denial of service appeared less critical for this particular project due to the application's current scale, which reduces the likelihood of large automated attacks.
 
 The important severity and potential for authentication risks and data breaches significantly influenced our risk management strategies. This insight compelled us to prioritize the implementation of a secure dual token architecture and AES 256 encryption over only concentrating on fundamental frontend functions.
+
+## Application Manual Testing
+
+## Application Automatic Testing Using ZAP
+
+<b>Vulnerabilities Found:</b>
+1. Content Security Policy (CSP) Header Not Set / Missing Directives
+
+**The type of vulnerability:** Security Misconfiguration (Missing CSP Header & Fallbacks).
+
+**The affected area or feature:** Systemic/Global (affects the entire application, including /login, /register, and /sitemap.xml).
+
+**The severity level:** Medium.
+
+**Recommended fixes:** Configure the Express backend to send a strict Content-Security-Policy HTTP header. This acts as an allowlist, telling the browser exactly which scripts and resources are safe to load, heavily mitigating the impact of any potential XSS attacks.
+
+
