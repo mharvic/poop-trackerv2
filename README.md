@@ -399,3 +399,42 @@ To verify the frontend output encoding and backend input validation, a Stored XS
 
 * **Recommended fixes:** Set the X-Frame-Options HTTP response header to DENY or SAMEORIGIN. Alternatively, use the CSP frame-ancestors directive. This prevents malicious websites from embedding to the application inside an invisible <iframe> to trick users into clicking buttons they didn't intend to.
 
+3. Sub Resource Integrity (SRI) Attribute Missing
+* **The type of vulnerability:** Supply Chain / Third-Party exposure.
+
+* **The affected area or feature:** Frontend HTML (<link> tags fetching external Google Fonts/stylesheets).
+
+* **The severity level:** Medium.
+
+* **Recommended fixes:** Add an integrity attribute to the HTML <link> tags that fetch external resources. This attribute contains a cryptographic hash of the file. If the third-party server (like Google Fonts) gets hacked and the file is maliciously altered, the browser will refuse to load it.
+
+4. Server Leaks Information via "X-Powered-By"
+
+* **The type of vulnerability: Information Disclosure.**
+
+* **The affected area or feature: Global HTTP Responses (e.g., /api/auth/google).**
+
+* **The severity level: Low.**
+
+* **Recommended fixes:** Disable the default Express footprint by adding app.disable('x-powered-by'); in our main server.js file. This stops the server from broadcasting to attackers exactly which framework we are using, making it harder for them to look up framework-specific exploits.
+
+5. X-Content-Type-Options Header Missing
+* **The type of vulnerability:** Security Misconfiguration (MIME-Sniffing exposure).
+
+* **The affected area or feature:** Global HTTP Responses (e.g., /styles.css).
+
+* **The severity level:** Low.
+
+* **Recommended fixes:** Set the X-Content-Type-Options header to nosniff. This forces the browser to strictly adhere to the MIME type declared by the server, preventing it from accidentally interpreting a text file or image as an executable malicious script.
+
+6. Information Disclosure - Sensitive Information in URL
+
+* **The type of vulnerability:** Information Disclosure.
+
+* **The affected area or feature:** Authentication routes (/login).
+
+* **The severity level:** Informational / Low.
+
+* **Recommended fixes:** Ensure that sensitive credentials (like passwords and usernames) are always sent via the HTTP POST body rather than attached to the URL query string (e.g., ?password=123). URLs are frequently logged by browsers, proxies, and web servers, which would expose the plaintext password.
+
+Performing both manual and automated testing is essential because they cover different blind spots. Manual testing allows us to evaluate specific, targeted payloads and verify that our application’s unique business logic behaves as expected. However, manual testing is inherently limited by time and human scope. This is where automated testing becomes invaluable. By utilizing automated scanners, we can subject the entire web application to hundreds of known vulnerabilities and complex payloads in a matter of seconds. Automated tools provide an insightful, comprehensive report on weaknesses we might not have thought to check, allowing us to proactively patch vulnerabilities and defend against the wide variety of attacks real-world hackers might attempt.
