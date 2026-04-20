@@ -360,6 +360,7 @@ The important severity and potential for authentication risks and data breaches 
 ## Application Manual Testing
 
 **1. Manual Testing: SQL Injection (SQLi)**
+
 To verify the security of the authentication system, manual SQL injection testing was performed on the login page. The goal was to attempt to bypass the authentication logic using common injection payloads.
 
 * Payload 1: ' OR 1=1 -- 
