@@ -364,12 +364,12 @@ The important severity and potential for authentication risks and data breaches 
 <b>Vulnerabilities Found:</b>
 1. Content Security Policy (CSP) Header Not Set / Missing Directives
 
-**The type of vulnerability:** Security Misconfiguration (Missing CSP Header & Fallbacks).
+* **The type of vulnerability:** Security Misconfiguration (Missing CSP Header & Fallbacks).
 
-**The affected area or feature:** Systemic/Global (affects the entire application, including /login, /register, and /sitemap.xml).
+* **The affected area or feature:** Systemic/Global (affects the entire application, including /login, /register, and /sitemap.xml).
 
-**The severity level:** Medium.
+* **The severity level:** Medium.
 
-**Recommended fixes:** Configure the Express backend to send a strict Content-Security-Policy HTTP header. This acts as an allowlist, telling the browser exactly which scripts and resources are safe to load, heavily mitigating the impact of any potential XSS attacks.
+* **Recommended fixes:** Configure the Express backend to send a strict Content-Security-Policy HTTP header. This acts as an allowlist, telling the browser exactly which scripts and resources are safe to load, heavily mitigating the impact of any potential XSS attacks.
 
 
