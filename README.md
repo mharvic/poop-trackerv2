@@ -359,6 +359,22 @@ The important severity and potential for authentication risks and data breaches 
 
 ## Application Manual Testing
 
+1. Manual Testing: SQL Injection (SQLi)
+To verify the security of the authentication system, manual SQL injection testing was performed on the login page. The goal was to attempt to bypass the authentication logic using common injection payloads.
+
+* Payload 1: ' OR 1=1 -- 
+* Payload 2: " OR ""=" 
+* Payload 3: admin' --
+
+**Result:** For every attempt, the application successfully rejected the malicious input and returned a "User not found" error. The backend properly sanitized the inputs and treated them as literal strings rather than executable database commands.
+
+2. Manual Testing: Cross-Site Scripting (XSS)
+
+To verify the frontend output encoding and backend input validation, a Stored XSS attack was simulated on the User Dashboard.
+
+* Payload: <script>alert("You have been hacked!");</script>
+**Result:** When the payload was submitted to the profile fields, the application successfully escaped the HTML characters (e.g., converting them to &lt;script&gt;). The browser rendered the payload as harmless plain text on the dashboard rather than executing the malicious JavaScript popup.
+
 ## Application Automatic Testing Using ZAP
 
 <b>Vulnerabilities Found:</b>
