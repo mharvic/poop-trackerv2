@@ -377,7 +377,7 @@ To verify the frontend output encoding and backend input validation, a Stored XS
   
 **Result:** When the payload was submitted to the profile fields, the application successfully escaped the HTML characters (e.g., converting them to &lt;script&gt;). The browser rendered the payload as harmless plain text on the dashboard rather than executing the malicious JavaScript popup.
 
-## Application Automatic Testing Using ZAP
+## Application Automated Testing Using ZAP
 
 <b>Vulnerabilities Found:</b>
 1. Content Security Policy (CSP) Header Not Set / Missing Directives
@@ -390,4 +390,12 @@ To verify the frontend output encoding and backend input validation, a Stored XS
 
 * **Recommended fixes:** Configure the Express backend to send a strict Content-Security-Policy HTTP header. This acts as an allowlist, telling the browser exactly which scripts and resources are safe to load, heavily mitigating the impact of any potential XSS attacks.
 
+2. Manual Testing: Cross-Site Scripting (XSS)
+* **The type of vulnerability:** Clickjacking (UI Redressing) exposure.
+
+* **The affected area or feature:** Systemic/Global (primarily frontend pages like /login).
+
+* **The severity level: Medium.**
+
+* **Recommended fixes:** Set the X-Frame-Options HTTP response header to DENY or SAMEORIGIN. Alternatively, use the CSP frame-ancestors directive. This prevents malicious websites from embedding to the application inside an invisible <iframe> to trick users into clicking buttons they didn't intend to.
 
