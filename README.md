@@ -338,6 +338,8 @@ The Data Flow Diagram (DFD) below visualizes the secure architecture of the appl
 
 <img width="670" height="606" alt="DFD" src="https://github.com/user-attachments/assets/e33be12c-2e47-4b7d-8823-485aaa0998a7" />
 
+This diagram also highlights potential attack points such as XSS, CSRF, injection attacks, and token theft across different layers of the system.
+
 ### Using STRIDE
 
 The STRIDE framework provides a structured approach to identifying security vulnerabilities across the application. The table below breaks down specific threats alongside existing mitigations and the calculated risk level for each category.
@@ -438,3 +440,92 @@ To verify the frontend output encoding and backend input validation, a Stored XS
 * **Recommended fixes:** Ensure that sensitive credentials (like passwords and usernames) are always sent via the HTTP POST body rather than attached to the URL query string (e.g., ?password=123). URLs are frequently logged by browsers, proxies, and web servers, which would expose the plaintext password.
 
 Performing both manual and automated testing is essential because they cover different blind spots. Manual testing allows us to evaluate specific, targeted payloads and verify that our application’s unique business logic behaves as expected. However, manual testing is inherently limited by time and human scope. This is where automated testing becomes invaluable. By utilizing automated scanners, we can subject the entire web application to hundreds of known vulnerabilities and complex payloads in a matter of seconds. Automated tools provide an insightful, comprehensive report on weaknesses we might not have thought to check, allowing us to proactively patch vulnerabilities and defend against the wide variety of attacks real-world hackers might attempt.
+
+
+---
+
+## Security Testing Summary
+
+To ensure a comprehensive evaluation of the application's security, both manual and automated testing methods were used.
+
+### Step-by-Step Testing Process
+
+1. Opened application in browser and identified input fields (login, profile update)
+2. Performed SQL Injection testing using common payloads
+3. Performed Cross-Site Scripting (XSS) testing using script injection
+4. Ran `npm audit` to detect dependency vulnerabilities
+5. Scanned the application using OWASP ZAP
+6. Reviewed HTTP headers using Chrome DevTools
+7. Documented all vulnerabilities and applied fixes
+
+---
+
+## Vulnerability Fixes Summary
+
+| Vulnerability         | Fix Implemented                            |
+| --------------------- | ------------------------------------------ |
+| XSS                   | Input sanitization and output encoding     |
+| SQL / NoSQL Injection | Express-validator input validation         |
+| Missing CSP Header    | Implemented Content-Security-Policy        |
+| Clickjacking          | Added X-Frame-Options header               |
+| X-Powered-By Header   | Disabled using app.disable('x-powered-by') |
+| MIME Sniffing         | Added X-Content-Type-Options: nosniff      |
+
+All identified vulnerabilities were addressed and re-tested to confirm that fixes were effective.
+
+---
+
+## Testing Tools
+
+The following tools were used throughout the security testing process:
+
+* npm audit → Identified vulnerabilities in dependencies
+* OWASP ZAP → Automated vulnerability scanner
+* Manual Testing → Simulated real-world attacks (SQLi, XSS)
+* Chrome DevTools → Verified headers and network responses
+
+These tools helped ensure both code-level and system-level security issues were identified.
+
+---
+
+## Ethical Responsibilities of Security Professionals
+
+All testing was conducted ethically and within a controlled environment on our own application.
+
+We ensured:
+
+* No unauthorized systems were accessed
+* No real user data was compromised
+* All testing was performed strictly for educational purposes
+
+Security techniques such as SQL injection and XSS were used responsibly to identify and fix vulnerabilities, not to exploit them.
+
+---
+
+## Legal Considerations
+
+During this phase, we considered the legal implications of handling user data and performing security testing.
+
+We ensured compliance with general data protection principles by:
+
+* Using HTTPS for secure communication
+* Avoiding exposure of sensitive data in URLs
+* Protecting authentication tokens
+* Implementing secure data storage practices
+
+These measures help align the application with standard privacy and security expectations.
+
+---
+
+## Lessons Learned
+
+This phase highlighted the importance of proactive security practices in web development.
+
+Key takeaways include:
+
+* Combining manual and automated testing improves security coverage
+* Even small configuration issues can introduce vulnerabilities
+* STRIDE provides a structured way to identify threats
+* Security must be continuously monitored and improved over time
+
+Overall, this phase strengthened our understanding of real-world web application security and risk management.
